@@ -59,10 +59,74 @@ terraform destroy
     sudo sysctl --system
     ```
 
-* Update and Upgrade the system
+* Adding Docker Repo:
   ```bash
-  sudo apt update -y && apt upgrade -y
+  # Add Docker's official GPG key:
+  sudo apt-get update && \
+  sudo apt-get install ca-certificates curl && \
+  sudo install -m 0755 -d /etc/apt/keyrings && \
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  
+  # Add the repository to Apt sources:
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+  sudo apt-get update
   ```
+  * Installing Containerd:
+  ```bash
+  sudo apt update && sudo apt install containerd.io -y
+  ```
+
+* Setting up default configuration for Containerd:
+  ```bash
+  sudo mkdir -p /etc/containerd && containerd config default | sudo tee /etc/containerd/config.toml 
+  ```
+* Configuring systemd cgroup driver:
+  ```bash
+  sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
+  ```
+* Restating Containerd:
+```bash
+sudo systemctl restart containerd
+```
+---
+* Downloading Kubernetes GPG Key:
+```bash
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+```
+* Adding Kubernetes Repo:
+```bash
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+```
+* Updaying Repo and installing Kubernetes Tools:
+```bash
+sudo apt-get update && \
+sudo apt-get install -y kubelet kubeadm kubectl && \
+sudo apt-mark hold kubelet kubeadm kubectl
+```
+---
+## RUN ONLY ON CONTROL PLANE:
+```bash
+kubeadm init
+```
+COPY THE OUTPUT AND PASTE IN THE NODES TO JOIN THE CLUSTER:
+```bash
+RUN ONLY ON NODES:
+Example: kubeadm join 99.999.999.99:6443 --token xxxx.xxxxxxxxx --discovery-token-ca-cert-hash sha256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+* Installing CNI - RUN ONLY ON CONTROL PLANE:
+```bash
+kubectl apply -f  https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/calico.yaml
+```
+
+# DONE, YOUR KUBERNETES CLUSTER IS READY!!!
+TESTING USING:
+```bash
+kubectl get nodes
+```
 
 # 2- Bash Automation
 __Under deployment__
