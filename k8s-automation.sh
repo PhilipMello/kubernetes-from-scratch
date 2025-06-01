@@ -207,7 +207,7 @@ kubeadm token create --print-join-command
 echo "Choose an option:"
 echo "1. Setup Cntrol Plane"
 echo "2. Add Worker Node"
-echo "2. Print Join Token"
+echo "3. Print Join Token"
 read option
 
 case $option in
@@ -215,5 +215,7 @@ case $option in
  k8s_control_plane
   ;;
  2) k8s_worker_node
+  ;;
+ 3) k8s_print_join_token
   ;;
 esac
