@@ -109,3 +109,11 @@ echo "Installing Kubernetes components..."
 sudo apt-get update && \
 sudo apt-get install -y kubelet kubeadm kubectl && \
 sudo apt-mark hold kubelet kubeadm kubectl
+
+# Step 14: Initialize Kubernetes master node
+echo "Initializing Kubernetes master node with kubeadm..."
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 | tee /root/kubeadm-init-output.log
+
+# Step 15: Save the kubeadm join command to a file (for worker nodes to join)
+echo "Saving join command for worker nodes..."
+kubeadm token create --print-join-command > /root/join.txt
