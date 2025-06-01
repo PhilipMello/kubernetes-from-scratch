@@ -129,7 +129,7 @@ kubectl get nodes
 ```
 
 # 2- Bash Automation
-__Under deployment__
+[Bash Automation](https://github.com/PhilipMello/kubernetes-from-scratch/blob/main/k8s-automation.sh)
 
 # 3- Ansible Automation
 __Under deployment__
