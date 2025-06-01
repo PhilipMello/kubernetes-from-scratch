@@ -26,7 +26,7 @@
 
 | ![DigitalOcean](https://img.icons8.com/?size=100&id=cvzmaEA4kC0o&format=png&color=000000) |
 | ------------------------------------------------------------ |
-| [Digital Ocean](#digital-ocean)                     |
+| [Digital Ocean](/digital-ocean)                     |
 
 
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=80&section=footer"/>
