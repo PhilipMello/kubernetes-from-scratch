@@ -35,3 +35,23 @@
 ---
 
 # Digital Ocean
+
+---
+# ☸ Kubernetes: Architecture and Essential Components
+
+#### A Kubernetes Cluster is defined as a `set of machines`, whether physical or virtual, that run Kubernetes to host and manage containers. This cluster is fundamentally divided into two main components: the Master Node `(Control Plane)` and the `Worker Nodes`.
+
+#### The Master Node is described as the component that manages the cluster and acts as the "brain" of Kubernetes. It is responsible for making crucial decisions, such as scheduling containers and maintaining the desired state of the system.
+
+---
+#### The following main components that make up the Master Node:
+- API Server (kube-apiserver): Este é o ponto de entrada para todos os comandos e interações com o cluster. Ele facilita a comunicação entre os componentes do Control Plane e também com os Worker Nodes.
+
+- Scheduler: A função do scheduler é decidir em qual worker node um pod (que é a menor unidade de execução no Kubernetes e pode conter um ou mais contêineres) deve ser executado. Ele leva em consideração fatores como recursos disponíveis e afinidade ao tomar essa decisão.
+
+- Controller Manager: Este componente monitora o estado do cluster. Ele realiza ações para garantir que o estado desejado seja atingido. Um exemplo citado é garantir que o número correto de réplicas de um pod esteja em execução.
+
+- etcd: Descrito como um banco de dados distribuído, o etcd é onde o estado do cluster e as configurações do Kubernetes são armazenados. Ele mantém informações sobre todos os objetos dentro do cluster, como pods, deployments (que definem como pods são gerenciados e atualizados), services (que expõem conjuntos de pods), entre outros.
+
+---
+#### In short, the Master Node (Control Plane) is essential for the functioning of the Kubernetes Cluster, orchestrating operations and ensuring that the state of the cluster matches the desired state. While the Worker Nodes are the machines that execute the containerized applications, the Master Node is the one that makes the decisions and manages this execution, communicating with the agents (kubelets) on the Worker Nodes and maintaining the centralized record of the cluster state in etcd. This split architecture allows Kubernetes to automate application management, including creation, distribution, scaling, and monitoring.
