@@ -37,6 +37,7 @@
 # Digital Ocean
 
 ---
+<a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/"><img src="https://kubernetes.io/images/kubeadm-stacked-color.png" width="150" height="160"></a>
 # ☸ Kubernetes: Architecture and Essential Components
 
 #### A Kubernetes Cluster is defined as a `set of machines`, whether physical or virtual, that run Kubernetes to host and manage containers. This cluster is fundamentally divided into two main components: the Master Node `(Control Plane)` and the `Worker Nodes`.
